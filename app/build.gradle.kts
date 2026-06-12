@@ -28,13 +28,7 @@ android {
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
-    }
-
-    kotlinOptions {
-        jvmTarget = "17"
-    }
-
+        =17           =n
     buildFeatures {
         compose = true
     }
@@ -42,6 +36,7 @@ android {
 
 dependencies {
     implementation(project(":feature:search"))
+    implementation(project(":feature:dict-manager"))
     implementation(project(":data:dictionary"))
     implementation(project(":domain:dictionary"))
     implementation(project(":core:designsystem"))

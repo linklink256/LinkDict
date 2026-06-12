@@ -21,6 +21,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -34,12 +35,20 @@ import com.linkdict.core.ui.EmptyState
 fun SearchScreen(
     uiState: SearchUiState,
     onAction: (SearchAction) -> Unit,
+    onOpenDictionaryManager: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Scaffold(
         modifier = modifier.fillMaxSize(),
         topBar = {
-            TopAppBar(title = { Text("LinkDict") })
+            TopAppBar(
+                title = { Text("LinkDict") },
+                actions = {
+                    TextButton(onClick = onOpenDictionaryManager) {
+                        Text("Dictionaries")
+                    }
+                },
+            )
         },
     ) { paddingValues ->
         Column(

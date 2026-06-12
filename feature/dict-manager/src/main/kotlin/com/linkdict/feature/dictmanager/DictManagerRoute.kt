@@ -1,19 +1,19 @@
-package com.linkdict.feature.search
+package com.linkdict.feature.dictmanager
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 
 @Composable
-fun SearchRoute(
-    viewModel: SearchViewModel,
-    onOpenDictionaryManager: () -> Unit,
+fun DictManagerRoute(
+    viewModel: DictManagerViewModel,
+    onBack: () -> Unit,
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
-    SearchScreen(
+    DictManagerScreen(
         uiState = uiState,
         onAction = viewModel::onAction,
-        onOpenDictionaryManager = onOpenDictionaryManager,
+        onBack = onBack,
     )
 }
