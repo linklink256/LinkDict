@@ -26,4 +26,24 @@ data class DictionaryConfig(
     val filePath: String,
     val enabled: Boolean = true,
     val order: Int = 0,
+    val sourceType: DictionarySourceType = DictionarySourceType.ImportedFile,
+    val fileSizeBytes: Long = 0L,
+)
+
+enum class DictionarySourceType {
+    BuiltIn,
+    ImportedFile,
+    ScannedPath,
+}
+
+data class DictionaryImportRequest(
+    val displayName: String,
+    val filePath: String,
+    val companionResourcePath: String? = null,
+)
+
+data class DictionaryScanResult(
+    val rootPath: String,
+    val candidates: List<DictionaryImportRequest>,
+    val skippedCount: Int = 0,
 )
