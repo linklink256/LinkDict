@@ -1,7 +1,15 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
-    alias(libs        minSdk = 26
+    alias(libs.plugins.kotlin.compose)
+}
+
+android {
+    namespace = "com.linkdict.core.designsystem"
+    compileSdk = 35
+
+    defaultConfig {
+        minSdk = 26
     }
 
     compileOptions {
