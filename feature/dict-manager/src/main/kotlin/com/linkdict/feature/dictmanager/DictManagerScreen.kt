@@ -44,7 +44,20 @@ fun DictManagerScreen(
                         Text("Back")
                     }
                 },
-            )               .               ( =n onAction = onAction,
+            )
+        },
+    ) { paddingValues ->
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(paddingValues)
+                .padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(12.dp),
+        ) {
+            item {
+                ImportCard(
+                    uiState = uiState,
+                    onAction = onAction,
                 )
             }
 
@@ -61,20 +74,10 @@ fun DictManagerScreen(
 
             uiState.message?.let { message ->
                 item {
-                    Card(modifier = Modifier.fillMaxWidth()) {
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(16.dp),
-                            horizontalArrangement = Arrangement.SpaceBetween,
-                            verticalAlignment = Alignment.CenterVertically,
-                        ) {
-                            Text(text = message)
-                            TextButton(onClick = { onAction(DictManagerAction.ClearMessage) }) {
-                                Text("Dismiss")
-                            }
-                        }
-                    }
+                    MessageCard(
+                        message = message,
+                        onDismiss = { onAction(DictManagerAction.ClearMessage) },
+                    )
                 }
             }
 
@@ -153,7 +156,10 @@ private fun ScanCard(
         ) {
             Text(
                 text = "Scan folder",
- = Out Modifier.fillMaxWidth(),
+                style = MaterialTheme.typography.titleMedium,
+            )
+            OutlinedTextField(
+                modifier = Modifier.fillMaxWidth(),
                 value = uiState.scanPath,
                 onValueChange = { onAction(DictManagerAction.ScanPathChanged(it)) },
                 label = { Text("Folder path") },
@@ -167,13 +173,40 @@ private fun ScanCard(
 }
 
 @Composable
+private fun MessageCard(
+    message: String,
+    onDismiss: () -> Unit,
+) {
+    Card(modifier = Modifier.fillMaxWidth()) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Text(
+                modifier = Modifier.weight(1f),
+                text = message,
+            )
+            TextButton(onClick = onDismiss) {
+                Text("Dismiss")
+            }
+        }
+    }
+}
+
+@Composable
 private fun DictionaryItem(
     config: DictionaryConfig,
     isFirst: Boolean,
     isLast: Boolean,
     onAction: (DictManagerAction) -> Unit,
 ) {
-    Card(modifier = Modifier.fill.paddingaced8.dp),
+    Card(modifier = Modifier.fillMaxWidth()) {
+        Column(
+            modifier = Modifier.padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -193,8 +226,8 @@ private fun DictionaryItem(
                 }
                 Switch(
                     checked = config.enabled,
-                    onCheckedChange = {
-                        onAction(DictManagerAction.ToggleEnabled(config.id, it))
+                    onCheckedChange = { enabled ->
+                        onAction(DictManagerAction.ToggleEnabled(config.id, enabled))
                     },
                 )
             }
